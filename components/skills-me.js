@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { Children, useState } from "react";
+import { View, Text, Image, Animated } from "react-native";
+import * as Animatable from "react-native-animatable";
 import Styles from "../styles/skills-styles";
 import { ScrollView } from "react-native-gesture-handler";
 import { Bar } from "react-native-progress";
@@ -12,11 +13,41 @@ const SkillsMe = () => {
   const percentage40 = 0.4;
   const percentage30 = 0.3;
   const percentage20 = 0.2;
+  const AnimatedContainer = ({ children }) => {
+    const [scaleValue] = useState(new Animated.Value(1));
+
+    const handleMouseEnter = () => {
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const handleMouseLeave = () => {
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    return (
+      <Animated.View
+        style={[Styles.imagesContainer, { transform: [{ scale: scaleValue }] }]}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </Animated.View>
+    );
+  };
+
   return (
     <ScrollView>
       <View style={Styles.skillsContainer}>
-        <Text style={Styles.title}>Lenguaje de programación</Text>
-        <View style={Styles.imagesContainer}>
+        <Text style={Styles.title}>Lenguajes de programación</Text>
+        <AnimatedContainer>
           <View style={Styles.imageText}>
             <Image
               source={require("../assets/images/kotlin-logo.png")}
@@ -137,9 +168,9 @@ const SkillsMe = () => {
               <Text style={Styles.percentageText}>30%</Text>
             </View>
           </View>
-        </View>
-        <Text style={Styles.title}>Bases de Datos</Text>
-        <View style={Styles.imagesContainer}>
+        </AnimatedContainer>
+        <Text style={Styles.title}>Gestores de Bases de Datos</Text>
+        <AnimatedContainer>
           <View style={Styles.imageText}>
             <Image
               source={require("../assets/images/mysql-logo.png")}
@@ -200,9 +231,9 @@ const SkillsMe = () => {
               <Text style={Styles.percentageText}>40%</Text>
             </View>
           </View>
-        </View>
+        </AnimatedContainer>
         <Text style={Styles.title}>Cloud</Text>
-        <View style={Styles.imagesContainer}>
+        <AnimatedContainer>
           <View style={Styles.imageText}>
             <Image
               source={require("../assets/images/firebase-logo.png")}
@@ -223,9 +254,9 @@ const SkillsMe = () => {
               <Text style={Styles.percentageText}>50%</Text>
             </View>
           </View>
-        </View>
+        </AnimatedContainer>
         <Text style={Styles.title}>Frameworks</Text>
-        <View style={Styles.imagesContainer}>
+        <AnimatedContainer>
           <View style={Styles.imageText}>
             <Image
               source={require("../assets/images/react-native.png")}
@@ -286,9 +317,9 @@ const SkillsMe = () => {
               <Text style={Styles.percentageText}>20%</Text>
             </View>
           </View>
-        </View>
+        </AnimatedContainer>
         <Text style={Styles.title}>Entornos de desarrollo</Text>
-        <View style={Styles.imagesContainer}>
+        <AnimatedContainer>
           <View style={Styles.imageText}>
             <Image
               source={require("../assets/images/AndroidStudio2023.svg")}
@@ -369,7 +400,7 @@ const SkillsMe = () => {
               <Text style={Styles.percentageText}>50%</Text>
             </View>
           </View>
-        </View>
+        </AnimatedContainer>
       </View>
     </ScrollView>
   );
