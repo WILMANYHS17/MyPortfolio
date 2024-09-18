@@ -1,14 +1,76 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Animated } from "react-native";
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
+import { Lato_400Regular } from "@expo-google-fonts/lato";
+import { RobotoMono_400Regular } from "@expo-google-fonts/roboto-mono";
+import { FiraSans_400Regular } from "@expo-google-fonts/fira-sans";
+import * as SplashScreen from "expo-splash-screen";
 import ExperienceStyles from "../styles/experience-styles";
 
 const ExperienceMe = () => {
+  const [appReady, setAppReady] = useState(false);
+
+  // Prevenir que la pantalla de carga se oculte automáticamente
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+  }, []);
+
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Lato_400Regular,
+    RobotoMono_400Regular,
+    FiraSans_400Regular,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+      setAppReady(true);
+    }
+  }, [fontsLoaded]);
+
+  if (!appReady) {
+    return null; // Muestra la pantalla de carga hasta que todo esté listo
+  }
+  const AnimatedContainer = ({ children }) => {
+    const [scaleValue] = useState(new Animated.Value(1));
+
+    const handleMouseEnter = () => {
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const handleMouseLeave = () => {
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    return (
+      <Animated.View
+        style={[
+          ExperienceStyles.rowContainer,
+          { transform: [{ scale: scaleValue }] },
+        ]}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </Animated.View>
+    );
+  };
+
   return (
     <ScrollView>
       <View style={ExperienceStyles.experienceContainer}>
         <Text style={ExperienceStyles.title}>Proyectos</Text>
-        <View style={ExperienceStyles.rowContainer}>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/EasySoccer.jpeg")}
             style={ExperienceStyles.companyImage}
@@ -22,12 +84,39 @@ const ExperienceMe = () => {
               Aplicación móvil en Android como proyecto de grado. Es un
               desarrollo individual lo cual involucra el diseño en Photoshop,
               documentación de repositorios nacionales, manipulación de datos en
-              Firebase, investigación y recopilación de datos, programación en
-              Android Studio con lenguaje Kotlin, inyección de dependencias
-              Koin, arquitectura MVVM, Retrofit y diferentes parámetros para el
-              óptimo funcionamiento de la aplicación.
+              Firebase con Cloud Firestore, investigación y recopilación de
+              datos, programación en Android Studio con lenguaje Kotlin,
+              inyección de dependencias Koin, arquitectura MVVM, Retrofit y
+              diferentes parámetros para el óptimo funcionamiento de la
+              aplicación.
             </Text>
-            <View style={ExperienceStyles.rowContainer}>
+            <View style={ExperienceStyles.rowContainerIcons}>
+              <View>
+                <Image
+                  source={require("../assets/images/kotlin-logo.png")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>Kotlin</Text>
+              </View>
+
+              <View>
+                <Image
+                  source={require("../assets/images/firebase-logo.png")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>Firebase</Text>
+              </View>
+              <View>
+                <Image
+                  source={require("../assets/images/AndroidStudio2023.svg")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>
+                  Android Studio
+                </Text>
+              </View>
+            </View>
+            <View style={ExperienceStyles.rowContainerIcons}>
               <Image
                 source={require("../assets/images/github.png")}
                 style={ExperienceStyles.iconImage}
@@ -43,8 +132,8 @@ const ExperienceMe = () => {
               </a>
             </View>
           </View>
-        </View>
-        <View style={ExperienceStyles.rowContainer}>
+        </AnimatedContainer>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/portfolio_10661829.png")}
             style={ExperienceStyles.companyImage}
@@ -57,10 +146,51 @@ const ExperienceMe = () => {
               JavaScript, con enfasis en la arquitectura MVC con el uso de
               componentes para cada vista del portfolio.
             </Text>
+            <View style={ExperienceStyles.rowContainerIcons}>
+              <View>
+                <Image
+                  source={require("../assets/images/react-native.png")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>React Native</Text>
+              </View>
+
+              <View>
+                <Image
+                  source={require("../assets/images/javascript-logo.png")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>JavaScript</Text>
+              </View>
+              <View>
+                <Image
+                  source={require("../assets/images/visual-studio-code-logo.png")}
+                  style={ExperienceStyles.lenguageImages}
+                ></Image>
+                <Text style={ExperienceStyles.lenguageTitle}>
+                  Visual Studio Code
+                </Text>
+              </View>
+            </View>
+            <View style={ExperienceStyles.rowContainerIcons}>
+              <Image
+                source={require("../assets/images/github.png")}
+                style={ExperienceStyles.iconImage}
+              ></Image>
+              <a
+                href={"https://github.com/WILMANYHS17/MyPortfolio"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Text style={ExperienceStyles.companyDescription}>
+                  MyPortfolio
+                </Text>
+              </a>
+            </View>
           </View>
-        </View>
+        </AnimatedContainer>
         <Text style={ExperienceStyles.title}>Experiencia laboral</Text>
-        <View style={ExperienceStyles.rowContainer}>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/Ejecutora-de-proyectos-icon.png")}
             style={ExperienceStyles.companyImage}
@@ -79,8 +209,8 @@ const ExperienceMe = () => {
               escrutinio. Esto se realizó en el municipio de Boyacá, Boyacá.
             </Text>
           </View>
-        </View>
-        <View style={ExperienceStyles.rowContainer}>
+        </AnimatedContainer>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/Fundación.png")}
             style={ExperienceStyles.companyImage}
@@ -101,8 +231,8 @@ const ExperienceMe = () => {
               correspondientes de los temas tratados en las capacitaciones.
             </Text>
           </View>
-        </View>
-        <View style={ExperienceStyles.rowContainer}>
+        </AnimatedContainer>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/Fundación.png")}
             style={ExperienceStyles.companyImage}
@@ -124,8 +254,8 @@ const ExperienceMe = () => {
               peso específico para las verduras.
             </Text>
           </View>
-        </View>
-        <View style={ExperienceStyles.rowContainer}>
+        </AnimatedContainer>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/cafexpress.jpeg")}
             style={ExperienceStyles.companyImage}
@@ -144,8 +274,8 @@ const ExperienceMe = () => {
               la organización del local.
             </Text>
           </View>
-        </View>
-        <View style={ExperienceStyles.rowContainer}>
+        </AnimatedContainer>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/calzado.jpg")}
             style={ExperienceStyles.companyImage}
@@ -163,9 +293,9 @@ const ExperienceMe = () => {
               preferencias.
             </Text>
           </View>
-        </View>
+        </AnimatedContainer>
 
-        <View style={ExperienceStyles.rowContainer}>
+        <AnimatedContainer style={ExperienceStyles.rowContainer}>
           <Image
             source={require("../assets/images/Mercoop.png")}
             style={ExperienceStyles.companyImage}
@@ -184,7 +314,7 @@ const ExperienceMe = () => {
               la organización y atención del local.
             </Text>
           </View>
-        </View>
+        </AnimatedContainer>
       </View>
     </ScrollView>
   );
