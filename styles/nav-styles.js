@@ -39,6 +39,10 @@ const StylesHeader = StyleSheet.create({
   navItemHovered: {
     color: colors.gold, // El color al pasar el cursor
   },
+  activeNavItem: {
+    borderBottomWidth: 2, // Esto es la raya que aparecerá debajo del botón activo
+    borderBottomColor: colors.gold, // Color de la raya
+  },
 });
 
 export default StylesHeader;
