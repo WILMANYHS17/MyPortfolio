@@ -1,4 +1,9 @@
 import { StyleSheet } from "react-native";
+const fonts = {
+  montserrat: "Montserrat_400Regular", //Title
+  firaSans: "FiraSans_400Regular", //Title secundary
+  firaCode: "FiraCode_400Regular", //Numbers
+};
 const colors = {
   primaryBlue: "#007bff", // Ideal para botones principales
   darkBlue: "#0056b3", // Para botones al pasar el mouse o botones secundarios
@@ -32,6 +37,7 @@ const Styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 50,
     textAlign: "center",
+    fontFamily: fonts.montserrat,
   },
   imagesContainer: {
     flex: 1,
@@ -68,6 +74,7 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: fonts.firaSans,
   },
   progressBarContainer: {
     position: "relative", // Posicionamiento relativo para colocar el texto sobre la barra
@@ -82,7 +89,8 @@ const Styles = StyleSheet.create({
   percentageText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#000", // Color del texto
+    color: colors.black, // Color del texto
+    fontFamily: fonts.fireCode,
   },
 });
 

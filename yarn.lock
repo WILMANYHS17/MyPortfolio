@@ -823,6 +823,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/fira-code@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/fira-code/-/fira-code-0.2.3.tgz#1316c8c618747f60c098caaf9394a4e57885b5f4"
+  integrity sha512-rrl8TxYYuAO4xGKlOatEDLUH8mkrGc+ywG54BfL649hHTg2K5UwfT2k7jg7YMhw48FPQ0ebyt4ISoRc3fhyHjg==
+
 "@expo-google-fonts/fira-sans@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/fira-sans/-/fira-sans-0.2.3.tgz#f406fc66b0e8a3ec3499a2ddb07b9d8ed971b938"

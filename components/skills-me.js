@@ -1,6 +1,9 @@
-import React, { Children, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, Animated } from "react-native";
-import * as Animatable from "react-native-animatable";
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
+import { FiraSans_400Regular } from "@expo-google-fonts/fira-sans";
+import { FiraCode_400Regular } from "@expo-google-fonts/fira-code";
+import * as SplashScreen from "expo-splash-screen";
 import Styles from "../styles/skills-styles";
 import { ScrollView } from "react-native-gesture-handler";
 import { Bar } from "react-native-progress";
@@ -13,6 +16,29 @@ const SkillsMe = () => {
   const percentage40 = 0.4;
   const percentage30 = 0.3;
   const percentage20 = 0.2;
+  const [appReady, setAppReady] = useState(false);
+
+  // Prevenir que la pantalla de carga se oculte automáticamente
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+  }, []);
+
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    FiraSans_400Regular,
+    FiraCode_400Regular,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+      setAppReady(true);
+    }
+  }, [fontsLoaded]);
+
+  if (!appReady) {
+    return null; // Muestra la pantalla de carga hasta que todo esté listo
+  }
   const AnimatedContainer = ({ children }) => {
     const [scaleValue] = useState(new Animated.Value(1));
 
