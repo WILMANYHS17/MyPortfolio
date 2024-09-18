@@ -1,4 +1,10 @@
 import { StyleSheet } from "react-native";
+const fonts = {
+  montserrat: "Montserrat_400Regular", //Title
+  lato: "Lato_400Regular", //Description
+  robotoMono: "RobotoMono_400Regular", //Date
+  firaSans: "FiraSans_400Regular", //Title secundary
+};
 
 const colors = {
   primaryBlue: "#007bff", // Ideal para botones principales
@@ -49,21 +55,25 @@ const Styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: fonts.montserrat,
   },
   titleUniversitydegree: {
     fontSize: 26,
     fontWeight: "light",
     marginBottom: 50,
     fontStyle: "italic",
+    fontFamily: fonts.firaSans,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: fonts.montserrat,
   },
   description: {
     fontSize: 16,
     textAlign: "justify",
+    fontFamily: fonts.lato,
   },
   profilePhoto: {
     width: 400, // Ajusta el ancho según tu preferencia

@@ -1,9 +1,38 @@
-import React from "react";
-import { View, Text, Image, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
+import { Lato_400Regular } from "@expo-google-fonts/lato";
+import { RobotoMono_400Regular } from "@expo-google-fonts/roboto-mono";
+import { FiraSans_400Regular } from "@expo-google-fonts/fira-sans";
 import Styles from "../styles/about-styles";
 import { TouchableOpacity } from "react-native";
 
 const AboutMe = () => {
+  const [appReady, setAppReady] = useState(false);
+
+  // Prevenir que la pantalla de carga se oculte automáticamente
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+  }, []);
+
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Lato_400Regular,
+    RobotoMono_400Regular,
+    FiraSans_400Regular,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+      setAppReady(true);
+    }
+  }, [fontsLoaded]);
+
+  if (!appReady) {
+    return null; // Muestra la pantalla de carga hasta que todo esté listo
+  }
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = "../assets/documents/HV Wilman.pdf";
